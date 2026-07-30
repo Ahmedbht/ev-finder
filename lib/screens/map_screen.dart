@@ -4,6 +4,7 @@ import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
 import '../providers/station_provider.dart';
 import '../models/charging_station.dart';
+
 class MapScreen extends StatefulWidget {
   const MapScreen({super.key});
 
@@ -12,7 +13,6 @@ class MapScreen extends StatefulWidget {
 }
 
 class _MapScreenState extends State<MapScreen> {
-  // Default center point: Tétouan, Morocco
   final LatLng _defaultCenter = const LatLng(35.5785, -5.3684);
 
   @override
@@ -24,6 +24,34 @@ class _MapScreenState extends State<MapScreen> {
         longitude: _defaultCenter.longitude,
       );
     });
+  }
+
+  void _showStationDetails(ChargingStation station) {
+    showModalBottomSheet(
+      context: context,
+      builder: (context) {
+        return Padding(
+          padding: const EdgeInsets.all(20),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                station.name,
+                style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              ),
+              const SizedBox(height: 8),
+              if (station.address != null)
+                Text("${station.address}, ${station.town ?? ''}"),
+              const SizedBox(height: 12),
+              Text("Connectors: ${station.connectorTypes.join(', ')}"),
+              const SizedBox(height: 4),
+              Text("Charging points: ${station.numberOfPoints}"),
+            ],
+          ),
+        );
+      },
+    );
   }
 
   @override
@@ -54,11 +82,11 @@ class _MapScreenState extends State<MapScreen> {
                           height: 40,
                           child: GestureDetector(
                             onTap: () => _showStationDetails(station),
-                            child : const Icon(
+                            child: const Icon(
                               Icons.ev_station,
                               color: Colors.green,
                               size: 32,
-                            )
+                            ),
                           ),
                         );
                       }).toList(),
