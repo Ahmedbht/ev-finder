@@ -52,10 +52,13 @@ class _MapScreenState extends State<MapScreen> {
                           point: LatLng(station.latitude, station.longitude),
                           width: 40,
                           height: 40,
-                          child: const Icon(
-                            Icons.ev_station,
-                            color: Colors.green,
-                            size: 32,
+                          child: GestureDetector(
+                            onTap: () => _showStationDetails(station),
+                            child : const Icon(
+                              Icone.ev_station,
+                              color: Colors.green,
+                              size: 32,
+                            )
                           ),
                         );
                       }).toList(),
