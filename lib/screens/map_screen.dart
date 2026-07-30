@@ -3,7 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
 import '../providers/station_provider.dart';
-
+import '../models/charging_station.dart';
 class MapScreen extends StatefulWidget {
   const MapScreen({super.key});
 
@@ -55,7 +55,7 @@ class _MapScreenState extends State<MapScreen> {
                           child: GestureDetector(
                             onTap: () => _showStationDetails(station),
                             child : const Icon(
-                              Icone.ev_station,
+                              Icons.ev_station,
                               color: Colors.green,
                               size: 32,
                             )
