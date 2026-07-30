@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import '../models/charging_station.dart';
+import '../config/api_config.dart';
 
 class OcmService {
   static const String _baseUrl = 'https://api.openchargemap.io/v3/poi/';
