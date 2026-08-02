@@ -4,6 +4,7 @@ import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
 import '../providers/station_provider.dart';
 import '../models/charging_station.dart';
+import '../services/favorites_service.dart';
 
 class MapScreen extends StatefulWidget {
   const MapScreen({super.key});
