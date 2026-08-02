@@ -28,28 +28,58 @@ class _MapScreenState extends State<MapScreen> {
   }
 
   void _showStationDetails(ChargingStation station) {
+    final favoritesService = FavoritesService();
+
     showModalBottomSheet(
       context: context,
       builder: (context) {
-        return Padding(
-          padding: const EdgeInsets.all(20),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                station.name,
-                style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-              ),
-              const SizedBox(height: 8),
-              if (station.address != null)
-                Text("${station.address}, ${station.town ?? ''}"),
-              const SizedBox(height: 12),
-              Text("Connectors: ${station.connectorTypes.join(', ')}"),
-              const SizedBox(height: 4),
-              Text("Charging points: ${station.numberOfPoints}"),
-            ],
-          ),
+        return StatefulBuilder(
+          builder: (context, setModalState) {
+            return FutureBuilder<bool>(
+              future: favoritesService.isFavorite(station.id),
+              builder: (context, snapshot) {
+                final isFav = snapshot.data ?? false;
+
+                return Padding(
+                  padding: const EdgeInsets.all(20),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Expanded(
+                            child: Text(
+                              station.name,
+                              style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                            ),
+                          ),
+                          IconButton(
+                            icon: Icon(
+                              isFav ? Icons.star : Icons.star_border,
+                              color: Colors.amber,
+                            ),
+                            onPressed: () async {
+                              await favoritesService.toggleFavorite(station.id);
+                              setModalState(() {}); // refresh this bottom sheet's content
+                            },
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 8),
+                      if (station.address != null)
+                        Text("${station.address}, ${station.town ?? ''}"),
+                      const SizedBox(height: 12),
+                      Text("Connectors: ${station.connectorTypes.join(', ')}"),
+                      const SizedBox(height: 4),
+                      Text("Charging points: ${station.numberOfPoints}"),
+                    ],
+                  ),
+                );
+              },
+            );
+          },
         );
       },
     );
