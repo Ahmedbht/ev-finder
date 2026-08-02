@@ -1,17 +1,28 @@
-# ev_finder
+# EV Finder
 
-A new Flutter project.
+A Flutter app for finding nearby EV charging stations, using real-time data from the Open Charge Map API.
+
+## Features
+- Live map (OpenStreetMap tiles) showing nearby EV charging stations
+- Tap a station marker to view details: address, connector types, number of charging points
+- Save stations to Favorites (persisted locally)
+- Bottom navigation between Map and Favorites
+
+## Tech Stack
+- Flutter / Dart
+- `flutter_map` + OpenStreetMap (no Google Maps billing required)
+- Open Charge Map API for station data
+- `provider` for state management
+- `shared_preferences` for local favorites storage
 
 ## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Learn Flutter](https://docs.flutter.dev/get-started/learn-flutter)
-- [Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Flutter learning resources](https://docs.flutter.dev/reference/learning-resources)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+1. Clone the repo
+2. Get a free API key from [openchargemap.org](https://openchargemap.org/site/develop/api)
+3. Create `lib/config/api_config.dart`:
+```dart
+   class ApiConfig {
+     static const String ocmApiKey = 'YOUR_KEY_HERE';
+   }
+```
+4. Run `flutter pub get`
+5. Run `flutter run`
