@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'providers/station_provider.dart';
 import 'screens/map_screen.dart';
 import 'screens/favorites_screen.dart';
+import 'screens/splash_screen.dart';
 
 void main() {
   runApp(
@@ -26,7 +27,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.green),
         useMaterial3: true,
       ),
-      home: const RootScreen(),
+      home: const SplashScreen(next: RootScreen()),
     );
   }
 }
